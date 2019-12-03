@@ -9,7 +9,7 @@ import com.android.volley.Response
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import pl.polsl.homeorganizer.*
-import pl.polsl.homeorganizer.notes.NotesActivity
+import pl.polsl.homeorganizer.household.JoinHousehold
 import pl.polsl.homeorganizer.register.CustomRequest
 import pl.polsl.homeorganizer.register.RegisterActivity
 

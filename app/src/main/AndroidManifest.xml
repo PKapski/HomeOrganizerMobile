@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".JoinHousehold"
+            android:name=".household.JoinHousehold"
             android:label="@string/title_activity_join_household"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

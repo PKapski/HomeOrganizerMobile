@@ -12,10 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".household.MyHousehold"></activity>
         <activity
-            android:name=".household.JoinHousehold"
+            android:name=".household.HouseholdManager"
             android:label="@string/title_activity_join_household"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".notes.NotesActivity"
             android:label="@string/title_activity_notes"

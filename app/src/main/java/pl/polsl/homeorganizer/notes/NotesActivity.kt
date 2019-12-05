@@ -17,8 +17,8 @@ class NotesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val cred =
-            AuthenticationManager.getAccessToken(this.applicationContext)
-        usernameNotes.text = cred.userId
+            AuthenticationManager.getCredentials(this.applicationContext)
+        usernameNotes.text = cred.username
         tokenNotes.text = cred.token
 
         fab.setOnClickListener { view ->

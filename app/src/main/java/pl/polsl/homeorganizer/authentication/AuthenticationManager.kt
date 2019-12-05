@@ -8,7 +8,7 @@ object AuthenticationManager {
     private const val PREFERENCES_NAME="credentials"
     private const val USER_CREDENTIALS = "user_credentials"
 
-    fun saveCredentials(context: Context, credentials: Credentials) {
+    fun setCredentials(credentials: Credentials, context: Context) {
         val sp = context.getSharedPreferences(
             PREFERENCES_NAME, Context.MODE_PRIVATE)
 
@@ -17,7 +17,7 @@ object AuthenticationManager {
             .apply()
     }
 
-    fun getAccessToken(context: Context): Credentials {
+    fun getCredentials(context: Context): Credentials {
         val sp = context.getSharedPreferences(
             PREFERENCES_NAME, Context.MODE_PRIVATE)
         val json = sp!!.getString(USER_CREDENTIALS, "")

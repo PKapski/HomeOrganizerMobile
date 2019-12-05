@@ -12,6 +12,7 @@ import org.json.JSONObject
 import pl.polsl.homeorganizer.MySingleton
 import pl.polsl.homeorganizer.R
 import pl.polsl.homeorganizer.authentication.LoginActivity
+import pl.polsl.homeorganizer.http.requests.CustomJsonRequest
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -21,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
             if (checkIfFieldsAreInvalid()) return@setOnClickListener
-            val url = "http://192.168.0.248:8080/users"
+            val url = getString(R.string.server_ip)+"users"
             val jsonObject = JSONObject()
 
             jsonObject.put("username",usernameRegisterText.text.toString())
@@ -30,19 +31,26 @@ class RegisterActivity : AppCompatActivity() {
             jsonObject.put("lastName", lastNameText.text.toString())
             jsonObject.put("password", passwordRegisterText.text.toString())
 
-            val request = CustomRequest(Request.Method.POST, url, jsonObject,
-                Response.Listener {
-                    response->
+            val request = CustomJsonRequest(
+                Request.Method.POST,
+                url,
+                jsonObject,
+                Response.Listener { response ->
                     Toast.makeText(
                         applicationContext, "User successfully created!",
                         Toast.LENGTH_LONG
                     ).show()
-                    intent = Intent(this,
-                        LoginActivity::class.java)
+                    intent = Intent(
+                        this,
+                        LoginActivity::class.java
+                    )
                     startActivity(intent)
-                }, Response.ErrorListener {
+                },
+                Response.ErrorListener {
                     errorText.text = getString(R.string.uniqennes_error)
-                })
+                },
+                this.applicationContext
+            )
            // queue.add(request)
             MySingleton.getInstance(this.applicationContext).addToRequestQueue(request)
         }
@@ -53,19 +61,19 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun checkIfFieldsAreInvalid(): Boolean {
-        if (TextUtils.isEmpty(usernameRegisterText.text.toString()) || usernameRegisterText.text.toString().length<5) {
+        if (TextUtils.isEmpty(usernameRegisterText.text.toString().trim()) || usernameRegisterText.text.toString().trim().length<5) {
             usernameRegisterText.error = getString(R.string.invalid_username)
             return true
         }
-        if (TextUtils.isEmpty(emailText.text.toString()) || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailText.text.toString()).matches()) {
+        if (TextUtils.isEmpty(emailText.text.toString().trim()) || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailText.text.toString().trim()).matches()) {
             emailText.error = getString(R.string.invalid_email)
             return true
         }
-        if (passwordRegisterText.text.toString().length <5){
+        if (passwordRegisterText.text.toString().trim().length <5){
             passwordRegisterText.error = getString(R.string.invalid_password)
             return true
         }
-        if (passwordRegisterText.text.toString() != repeatPasswordText.text.toString()) {
+        if (passwordRegisterText.text.toString().trim() != repeatPasswordText.text.toString().trim()) {
             repeatPasswordText.error = getString(R.string.passwords_error)
             return true
         }

@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import pl.polsl.homeorganizer.R
 
-class JoinHousehold : AppCompatActivity() {
+class HouseholdManager : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

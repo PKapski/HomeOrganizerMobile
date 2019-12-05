@@ -9,8 +9,9 @@ import com.android.volley.Response
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import pl.polsl.homeorganizer.*
-import pl.polsl.homeorganizer.household.JoinHousehold
-import pl.polsl.homeorganizer.register.CustomRequest
+import pl.polsl.homeorganizer.household.HouseholdManager
+import pl.polsl.homeorganizer.household.MyHousehold
+import pl.polsl.homeorganizer.http.requests.CustomJsonRequest
 import pl.polsl.homeorganizer.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -20,32 +21,38 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         loginButton.setOnClickListener{
-            if (usernameLoginText.text.toString().length<5){
+            if (usernameLoginText.text.toString().trim().length<5){
                 usernameLoginText.error=getString(R.string.invalid_username)
                 return@setOnClickListener
             }
 
             var username = usernameLoginText.text.toString()
             var password = passwordLoginText.text.toString()
-            val url = "http://192.168.0.248:8080/users/auth"
+            val url = getString(R.string.server_ip)+"users/auth"
             val jsonObject = JSONObject()
 
             jsonObject.put("username", username)
             jsonObject.put("password", password)
-            val request = CustomRequest(Request.Method.POST, url, jsonObject,
+            val request = CustomJsonRequest(
+                Request.Method.POST,
+                url,
+                jsonObject,
                 Response.Listener { response ->
                     val headers: JSONObject = response.getJSONObject("headers")
                     val credentials =
                         Credentials(
-                            headers.get("Authorization").toString(),
                             headers.get("Username").toString(),
+                            headers.get("Authorization").toString(),
                             getHousehold(headers)
                         )
-                    AuthenticationManager.saveCredentials(this.applicationContext,credentials)
+                    AuthenticationManager.setCredentials(credentials, this.applicationContext)
                     updateUiWithUser(username)
-                }, Response.ErrorListener {
+                },
+                Response.ErrorListener {
                     showLoginFailed()
-                })
+                },
+                this.applicationContext
+            )
             MySingleton.getInstance(this.applicationContext).addToRequestQueue(request)
         }
 
@@ -65,7 +72,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUiWithUser(username: String) {
         val welcome = getString(R.string.welcome)
-        val intent = Intent(this, JoinHousehold::class.java)
+        val intent: Intent = if (AuthenticationManager.getCredentials(this.applicationContext).householdId==null) {
+            Intent(this, HouseholdManager::class.java)
+        }else{
+            Intent(this, MyHousehold::class.java)
+        }
         startActivity(intent)
         Toast.makeText(
             applicationContext,

@@ -10,7 +10,7 @@
 
 
     <Button
-        android:id="@+id/loginButton3"
+        android:id="@+id/joinHouseholdButton"
         android:layout_width="268dp"
         android:layout_height="75dp"
         android:layout_gravity="start"
@@ -23,10 +23,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/householdIdEdit" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/householdIdEdit"
         android:layout_width="361dp"
         android:layout_height="46dp"
         android:layout_marginTop="60dp"
@@ -42,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
+        android:background="@color/colorBackground"
         android:text="Join household"
         android:textColor="#A5C3C6"
         android:textSize="50sp"

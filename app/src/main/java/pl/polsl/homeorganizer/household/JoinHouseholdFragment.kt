@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_join_household.view.*
 import pl.polsl.homeorganizer.MySingleton
 import pl.polsl.homeorganizer.R
 import pl.polsl.homeorganizer.authentication.AuthenticationManager
-import pl.polsl.homeorganizer.notes.NotesActivity
+import pl.polsl.homeorganizer.notes.NotesFragment
 import pl.polsl.homeorganizer.http.requests.CustomStringRequest
 
 class JoinHouseholdFragment : Fragment() {
@@ -41,7 +41,7 @@ class JoinHouseholdFragment : Fragment() {
                     Response.Listener {
                         val intent = Intent(
                             this.requireContext().applicationContext,
-                            NotesActivity::class.java
+                            NotesFragment::class.java
                         )
                         startActivity(intent)
                         credentials.householdId = id

@@ -12,13 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".household.MyHousehold"></activity>
+        <activity
+            android:name=".UserApplication"
+            android:label="@string/title_activity_user_application"></activity>
+        <activity
+            android:name=".Checklists"
+            android:label="@string/title_activity_checklists"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".household.MyHouseholdFragment" />
         <activity
             android:name=".household.HouseholdManager"
             android:label="@string/title_activity_join_household"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".notes.NotesActivity"
+            android:name=".notes.NotesFragment"
             android:label="@string/title_activity_notes"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

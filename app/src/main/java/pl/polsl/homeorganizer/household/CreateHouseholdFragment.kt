@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.fragment_create_household.view.*
 import org.json.JSONObject
 import pl.polsl.homeorganizer.MySingleton
 import pl.polsl.homeorganizer.R
+import pl.polsl.homeorganizer.UserApplication
 import pl.polsl.homeorganizer.authentication.AuthenticationManager
-import pl.polsl.homeorganizer.notes.NotesActivity
 import pl.polsl.homeorganizer.http.requests.CustomStringRequest
 
 class CreateHouseholdFragment : Fragment(){
@@ -63,7 +63,7 @@ class CreateHouseholdFragment : Fragment(){
             null,
             Response.Listener {
                 val intent =
-                    Intent(this.requireContext().applicationContext, NotesActivity::class.java)
+                    Intent(this.requireContext().applicationContext, UserApplication::class.java)
                 startActivity(intent)
             },
             Response.ErrorListener { error ->

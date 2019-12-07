@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import pl.polsl.homeorganizer.*
 import pl.polsl.homeorganizer.household.HouseholdManager
-import pl.polsl.homeorganizer.household.MyHousehold
 import pl.polsl.homeorganizer.http.requests.CustomJsonRequest
 import pl.polsl.homeorganizer.register.RegisterActivity
 
@@ -75,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         val intent: Intent = if (AuthenticationManager.getCredentials(this.applicationContext).householdId==null) {
             Intent(this, HouseholdManager::class.java)
         }else{
-            Intent(this, MyHousehold::class.java)
+            Intent(this, UserApplication::class.java)
         }
         startActivity(intent)
         Toast.makeText(

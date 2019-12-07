@@ -6,8 +6,9 @@
     android:orientation="horizontal"
     android:padding="10sp">
 
+
     <TextView
-        android:id="@+id/noteTitle"
+        android:id="@+id/checklistTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
@@ -16,22 +17,20 @@
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
-        android:id="@+id/noteCreator"
+        android:id="@+id/checklistCreator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="Creator"
+        android:textAlignment="textEnd"
         android:textAppearance="?attr/textAppearanceListItemSecondary" />
 
     <TextView
-        android:id="@+id/noteDate"
+        android:id="@+id/checklistDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="2019-04-05"
         android:textAlignment="viewEnd"
         android:textAppearance="?attr/textAppearanceListItemSecondary" />
-
-
 </LinearLayout>
-

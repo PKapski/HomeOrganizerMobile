@@ -7,21 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_notes"
-        android:name="pl.polsl.homeorganizer.notes.NotesFragment"
+        android:name="pl.polsl.homeorganizer.notes.NoteFragment"
         android:label="@string/title_notes"
         tools:layout="@layout/fragment_notes" >
         <action
-            android:id="@+id/action_navigation_notes_to_navigation_household"
+            android:id="@+id/action_navigation_notes_to_navigation_checklists"
+            app:destination="@id/navigation_checklists" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_checklists"
+        android:name="pl.polsl.homeorganizer.checklists.ChecklistFragment"
+        android:label="@string/title_checklists"
+        tools:layout="@layout/fragment_checklist" >
+        <action
+            android:id="@+id/action_navigation_checklists_to_navigation_household"
             app:destination="@id/navigation_household" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_checklists"-->
-<!--        android:name="pl.polsl.homeorganizer.ui.dashboard.DashboardFragment"-->
-<!--        android:label="@string/title_checklists"-->
-<!--        tools:layout="@layout/fragment_dashboard" />-->
-
-<!--    <fragment-->
+    <!--    <fragment-->
 <!--        android:id="@+id/navigation_calendar"-->
 <!--        android:name="pl.polsl.homeorganizer.ui.notifications.NotificationsFragment"-->
 <!--        android:label="@string/title_calendar"-->

@@ -11,22 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".MainApplication">
         <activity
             android:name=".UserApplication"
-            android:label="@string/title_activity_user_application"></activity>
-        <activity
-            android:name=".Checklists"
-            android:label="@string/title_activity_checklists"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".household.MyHouseholdFragment" />
+            android:label="@string/title_activity_user_application"
+            android:theme="@style/AppTheme"></activity>
+
         <activity
             android:name=".household.HouseholdManager"
             android:label="@string/title_activity_join_household"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".notes.NotesFragment"
-            android:label="@string/title_activity_notes"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".authentication.LoginActivity"

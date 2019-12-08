@@ -10,5 +10,5 @@
     android:layout_height="match_parent"
     android:background="@drawable/text_border"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".checklists.ChecklistFragment"
-    tools:listitem="@layout/fragment_checklist" />
+    tools:context=".notes.NoteFragment"
+    tools:listitem="@layout/fragment_notes" />

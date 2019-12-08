@@ -9,16 +9,19 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.TEXT_ALIGNMENT_CENTER
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.Response
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_join_household.*
 import kotlinx.android.synthetic.main.fragment_my_household.view.*
+import kotlinx.android.synthetic.main.toolbar_basic.*
 import pl.polsl.homeorganizer.MySingleton
 import pl.polsl.homeorganizer.R
 import pl.polsl.homeorganizer.authentication.AuthenticationManager
@@ -36,10 +39,10 @@ class MyHouseholdFragment : Fragment() {
             copyId()
             createCopiedToast()
         }
-        view.leaveHouseholdIcon.setOnClickListener{
+        setHouseholdToolbar()
+        (activity as AppCompatActivity).leaveHouseholdIcon.setOnClickListener{
             showConfirmationDialog()
         }
-        var household: Household
         val url =
             getString(R.string.server_ip) + "households/" + AuthenticationManager.getCredentials(
                 this.requireContext().applicationContext
@@ -49,7 +52,7 @@ class MyHouseholdFragment : Fragment() {
             url,
             null,
             Response.Listener { response ->
-                household = Gson().fromJson(response.toString(), Household::class.java)
+                val household = Gson().fromJson(response.toString(), Household::class.java)
                 setViewTexts(household,view)
                 getUsersAndCreateTable(household.id,view)
             },
@@ -60,6 +63,16 @@ class MyHouseholdFragment : Fragment() {
         )
         MySingleton.getInstance(this.requireContext().applicationContext).addToRequestQueue(request)
         return view
+    }
+
+    private fun setHouseholdToolbar() {
+        val addToolbar =
+            (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar_with_add)
+        val householdToolbar =
+            (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar_basic)
+        addToolbar.visibility = GONE
+        householdToolbar.visibility = VISIBLE
+        householdToolbar.title = "Household"
     }
 
     private fun showConfirmationDialog() {

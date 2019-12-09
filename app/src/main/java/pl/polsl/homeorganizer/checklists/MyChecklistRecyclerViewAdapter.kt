@@ -42,7 +42,7 @@ class MyChecklistRecyclerViewAdapter(
         val item = mValues[position]
         holder.mTitleView.text = item.title
         holder.mCreatorView.text = item.creator
-        holder.mDateView.text = getDateFromId(item.id)
+        holder.mDateView.text = getDateFromId(item.id!!)
 
         with(holder.mView) {
             tag = item

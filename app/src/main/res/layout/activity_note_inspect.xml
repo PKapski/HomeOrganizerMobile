@@ -8,7 +8,7 @@
     tools:context=".notes.NoteInspectActivity">
 
     <include
-        android:id="@+id/toolbar_inspection"
+        android:id="@+id/toolbar_inspection_note"
         layout="@layout/toolbar_inspection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:id="@+id/messageTextNote"
         android:layout_width="393dp"
         android:layout_height="398dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="116dp"
         android:background="@drawable/text_border"
         android:clickable="false"
         android:ems="10"
@@ -54,11 +54,10 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="From:"
-        android:textSize="18sp"
+        android:text="Creator:"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/titleTextNote"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_inspection" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_inspection_note" />
 
     <TextView
         android:id="@+id/creatorTextNote"
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="Creator"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
@@ -79,17 +78,7 @@
         android:textSize="14sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@+id/messageTextNote"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_inspection" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_inspection_note" />
 
-    <TextView
-        android:id="@+id/createdText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Created:"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/dateTextNote"
-        app:layout_constraintEnd_toStartOf="@+id/dateTextNote" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

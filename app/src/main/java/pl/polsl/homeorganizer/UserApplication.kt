@@ -2,11 +2,9 @@ package pl.polsl.homeorganizer
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -20,6 +18,7 @@ import pl.polsl.homeorganizer.authentication.AuthenticationManager
 import pl.polsl.homeorganizer.authentication.LoginActivity
 import pl.polsl.homeorganizer.checklists.Checklist
 import pl.polsl.homeorganizer.checklists.ChecklistFragment
+import pl.polsl.homeorganizer.checklists.ChecklistInspectActivity
 import pl.polsl.homeorganizer.notes.Note
 import pl.polsl.homeorganizer.notes.NoteFragment
 import pl.polsl.homeorganizer.notes.NoteInspectActivity
@@ -51,6 +50,10 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
                 val note = Note(null,"",credentials.username, credentials.householdId!!,"")
                 inspectNote(note)
             }
+            R.id.navigation_checklists->{
+                val intent = Intent(this, ChecklistInspectActivity::class.java)
+                startActivity(intent)
+            }
         }
 
     }
@@ -63,7 +66,7 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
     }
 
     override fun onListFragmentInteraction(item: Checklist?) {
-        println(item)
+        inspectChecklist(item)
     }
 
     override fun onListFragmentInteraction(item: Note?) {
@@ -76,6 +79,11 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
         startActivity(intent)
     }
 
+    private fun inspectChecklist(item: Checklist?){
+        val intent = Intent(this, ChecklistInspectActivity::class.java)
+        intent.putExtra("checklist", item as Serializable)
+        startActivity(intent)
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
             val inflater: MenuInflater = menuInflater
             inflater.inflate(R.menu.account_menu,menu)

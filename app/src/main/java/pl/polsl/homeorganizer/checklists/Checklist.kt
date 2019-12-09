@@ -1,11 +1,11 @@
 package pl.polsl.homeorganizer.checklists
 
+import java.io.Serializable
+
 data class Checklist(
-    var id: String,
+    var id: String?,
     var title: String,
-    var recipent: String,
     var creator: String,
     var householdId: String,
-    var visibleToEveryone: Boolean,
     var itemList: List<ChecklistItem>
-)
+): Serializable

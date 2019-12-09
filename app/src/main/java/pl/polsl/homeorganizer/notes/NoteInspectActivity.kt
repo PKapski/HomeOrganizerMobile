@@ -28,13 +28,12 @@ class NoteInspectActivity : AppCompatActivity() {
 
     var editMode: Boolean = false
     lateinit var note: Note
-    var menu: Menu? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_inspect)
-        setSupportActionBar(findViewById(R.id.toolbar_inspection))
+        setSupportActionBar(findViewById(R.id.toolbar_inspection_note))
         note = intent.extras?.get("note") as Note
         creatorTextNote.text = note.creator
         titleTextNote.setText(note.title)
@@ -73,7 +72,6 @@ class NoteInspectActivity : AppCompatActivity() {
     private fun saveChangesInDatabase() {
         note.title = titleTextNote.text.toString()
         note.message = messageTextNote.text.toString()
-        Log.d("note", note.toString())
         val url = getString(R.string.server_ip) + "notes"
         val json = JSONObject(Gson().toJson(note))
         val request = CustomStringRequest(Request.Method.POST, url, json,
@@ -96,15 +94,13 @@ class NoteInspectActivity : AppCompatActivity() {
 
     private fun showDeleteConfirmationDialog() {
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Leave confirmation")
+        dialogBuilder.setTitle("Delete confirmation")
         dialogBuilder.setMessage("Are you sure you wanna delete this note?")
         dialogBuilder.setPositiveButton("Yes") { dialog, which ->
             deleteNote()
         }
         dialogBuilder.setNeutralButton("Cancel") { _, _ -> }
         dialogBuilder.create().show()
-
-
     }
 
     private fun deleteNote() {

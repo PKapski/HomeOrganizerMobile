@@ -14,8 +14,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".checklists.ChecklistInspectActivity"
+            android:theme="@style/CustomAppTheme"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
             android:name=".notes.NoteInspectActivity"
-            android:theme="@style/CustomAppTheme"/>
+            android:theme="@style/CustomAppTheme" />
         <activity
             android:name=".UserApplication"
             android:label="@string/title_activity_user_application"

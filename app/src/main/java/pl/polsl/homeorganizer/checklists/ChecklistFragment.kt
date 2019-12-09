@@ -41,18 +41,22 @@ class ChecklistFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                ChecklistsContent.getChecklists(object : ChecklistsCallback {
-                    override fun onSuccessResponse(result: MutableList<Checklist>) {
-                        adapter =
-                            MyChecklistRecyclerViewAdapter(
-                                ChecklistsContent.items,
-                                listener
-                            )
-                    }
-                })
+                getChecklists()
             }
         }
         return view
+    }
+
+    private fun RecyclerView.getChecklists() {
+        ChecklistsContent.getChecklists(object : ChecklistsCallback {
+            override fun onSuccessResponse(result: MutableList<Checklist>) {
+                adapter =
+                    MyChecklistRecyclerViewAdapter(
+                        ChecklistsContent.items,
+                        listener
+                    )
+            }
+        })
     }
 
     private fun setChecklistsToolbar() {
@@ -106,5 +110,11 @@ class ChecklistFragment : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+    override fun onResume() {
+        with(view as RecyclerView) {
+            getChecklists()
+        }
+        super.onResume()
     }
 }

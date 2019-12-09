@@ -2,6 +2,11 @@ package pl.polsl.homeorganizer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -11,6 +16,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_user_application.*
 import kotlinx.android.synthetic.main.toolbar_with_add_new.*
+import pl.polsl.homeorganizer.authentication.AuthenticationManager
+import pl.polsl.homeorganizer.authentication.LoginActivity
 import pl.polsl.homeorganizer.checklists.Checklist
 import pl.polsl.homeorganizer.checklists.ChecklistFragment
 import pl.polsl.homeorganizer.notes.Note
@@ -38,10 +45,12 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
     }
 
     private fun processAddNewClick() {
-        val intent: Intent
-        val current_fragment = nav_view.menu.findItem(nav_view.selectedItemId).toString()
-        when(current_fragment) {
-            //TODO
+        val credentials = AuthenticationManager.getCredentials(this)
+        when(nav_view.selectedItemId) {
+            R.id.navigation_notes->{
+                val note = Note(null,"",credentials.username, credentials.householdId!!,"")
+                inspectNote(note)
+            }
         }
 
     }
@@ -58,8 +67,31 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
     }
 
     override fun onListFragmentInteraction(item: Note?) {
+        inspectNote(item)
+    }
+
+    private fun inspectNote(item: Note?) {
         val intent = Intent(this, NoteInspectActivity::class.java)
         intent.putExtra("note", item as Serializable)
+        startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            val inflater: MenuInflater = menuInflater
+            inflater.inflate(R.menu.account_menu,menu)
+            return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.action_logout -> logout()
+        }
+        return true
+    }
+
+    private fun logout() {
+        AuthenticationManager.clearCredentials(this.applicationContext)
+        val intent = Intent(this,LoginActivity::class.java)
+        this.finish()
         startActivity(intent)
     }
 }

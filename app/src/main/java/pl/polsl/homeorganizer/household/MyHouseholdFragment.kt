@@ -21,7 +21,7 @@ import com.android.volley.Response
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_join_household.*
 import kotlinx.android.synthetic.main.fragment_my_household.view.*
-import kotlinx.android.synthetic.main.toolbar_basic.*
+import kotlinx.android.synthetic.main.toolbar_with_exit.*
 import pl.polsl.homeorganizer.MySingleton
 import pl.polsl.homeorganizer.R
 import pl.polsl.homeorganizer.authentication.AuthenticationManager

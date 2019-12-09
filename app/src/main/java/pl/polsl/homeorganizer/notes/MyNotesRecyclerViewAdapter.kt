@@ -27,8 +27,6 @@ class MyNotesRecyclerViewAdapter(
     init {
         mOnClickListener = View.OnClickListener { v ->
             val item = v.tag as Note
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
         }
     }
@@ -43,7 +41,7 @@ class MyNotesRecyclerViewAdapter(
         val item = mValues[position]
         holder.mTitleView.text = item.title
         holder.mCreatorView.text = item.creator
-        holder.mDateView.text = getDateFromId(item.id)
+        holder.mDateView.text = getDateFromId(item.id!!)
 
         with(holder.mView) {
             tag = item

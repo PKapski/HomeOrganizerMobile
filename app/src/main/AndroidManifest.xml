@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".notes.NoteInspectActivity"></activity>
+        <activity
+            android:name=".notes.NoteInspectActivity"
+            android:theme="@style/CustomAppTheme"/>
         <activity
             android:name=".UserApplication"
             android:label="@string/title_activity_user_application"

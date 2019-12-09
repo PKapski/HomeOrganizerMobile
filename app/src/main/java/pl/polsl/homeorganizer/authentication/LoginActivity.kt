@@ -18,7 +18,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        checkIfAlreadyLoggedIn()
         loginButton.setOnClickListener{
             if (usernameLoginText.text.toString().trim().length<5){
                 usernameLoginText.error=getString(R.string.invalid_username)
@@ -61,6 +61,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkIfAlreadyLoggedIn() {
+        val credentials = AuthenticationManager.getCredentials(this.applicationContext)
+        if (credentials.username!=""){
+            updateUiWithUser(credentials.username)
+        }
+    }
+
     private fun getHousehold(headers: JSONObject): String? {
         return if (headers.has("Household")){
             headers.get("Household").toString()
@@ -76,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         }else{
             Intent(this, UserApplication::class.java)
         }
+        this.finish()
         startActivity(intent)
         Toast.makeText(
             applicationContext,

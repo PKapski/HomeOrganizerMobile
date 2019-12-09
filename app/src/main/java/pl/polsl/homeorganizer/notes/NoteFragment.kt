@@ -46,18 +46,22 @@ class NoteFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                NotesContent.getChecklists(object : NotesCallback {
-                    override fun onSuccessResponse(result: MutableList<Note>) {
-                        adapter =
-                            MyNotesRecyclerViewAdapter(
-                                NotesContent.items,
-                                listener
-                            )
-                    }
-                })
+                getNotes()
             }
         }
         return view
+    }
+
+    private fun RecyclerView.getNotes() {
+        NotesContent.getChecklists(object : NotesCallback {
+            override fun onSuccessResponse(result: MutableList<Note>) {
+                adapter =
+                    MyNotesRecyclerViewAdapter(
+                        NotesContent.items,
+                        listener
+                    )
+            }
+        })
     }
 
     private fun setNotesToolbar() {
@@ -112,5 +116,12 @@ class NoteFragment : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+
+    override fun onResume() {
+        with(view as RecyclerView) {
+            getNotes()
+        }
+        super.onResume()
     }
 }

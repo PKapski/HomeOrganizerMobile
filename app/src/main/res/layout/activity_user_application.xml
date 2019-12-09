@@ -16,7 +16,7 @@
 
     <include
         android:id="@+id/toolbar_basic"
-        layout="@layout/toolbar_basic"
+        layout="@layout/toolbar_with_exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

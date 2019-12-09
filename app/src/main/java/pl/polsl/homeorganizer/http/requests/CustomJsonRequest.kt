@@ -46,7 +46,7 @@ open class CustomJsonRequest(
 
     override fun getHeaders(): MutableMap<String, String> {
         val headers = HashMap<String,String>()
-        headers["Authorization"] = AuthenticationManager?.getCredentials(context).token
+        headers["Authorization"] = AuthenticationManager.getCredentials(context).token
         return headers
     }
 }

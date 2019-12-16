@@ -29,7 +29,6 @@ class NoteInspectActivity : AppCompatActivity() {
     var editMode: Boolean = false
     lateinit var note: Note
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_inspect)
@@ -40,8 +39,6 @@ class NoteInspectActivity : AppCompatActivity() {
         messageTextNote.setText(note.message)
 
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun changeEditMode(item: MenuItem) {
         editMode = !editMode
         if (editMode) {
@@ -136,21 +133,19 @@ class NoteInspectActivity : AppCompatActivity() {
         return sdf.format(date)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.inspection_menu, menu)
         if (note.id == null) {
             changeEditMode(menu!!.findItem(R.id.action_edit))
-            dateTextNote.setText(formatDate(Date()))
+            dateTextNote.text = formatDate(Date())
         } else {
-            dateTextNote.setText(getDateFromId(note.id!!))
+            dateTextNote.text = getDateFromId(note.id!!)
 
         }
         return true
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_edit -> changeEditMode(item)

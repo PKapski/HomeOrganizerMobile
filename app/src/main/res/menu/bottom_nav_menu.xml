@@ -12,11 +12,6 @@
         android:title="@string/title_checklists" />
 
     <item
-        android:id="@+id/navigation_calendar"
-        android:icon="@drawable/ic_event_note_black_24dp"
-        android:title="@string/title_calendar" />
-
-    <item
         android:id="@+id/navigation_household"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_household" />

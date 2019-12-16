@@ -1,5 +1,6 @@
 package pl.polsl.homeorganizer.checklists
 
+import android.content.Context
 import com.android.volley.Request
 import com.android.volley.Response
 import com.google.gson.Gson
@@ -18,7 +19,7 @@ object ChecklistsContent {
 
     var items: MutableList<Checklist> = ArrayList()
 
-    fun getChecklists(callback: ChecklistsCallback) {
+    fun getChecklists(callback: ChecklistsCallback,context: Context) {
         val credentials = AuthenticationManager.getCredentials(MainApplication.applicationContext())
         val url =
             MainApplication.applicationContext().getString(R.string.server_ip) + "checklists?username" + credentials.username + "&householdId=" + credentials.householdId
@@ -33,7 +34,9 @@ object ChecklistsContent {
                 callback.onSuccessResponse(items)
             },
             Response.ErrorListener {
-
+                if (it.networkResponse.statusCode==403){
+                    AuthenticationManager.logout(context)
+                }
             }, MainApplication.applicationContext()
         )
 

@@ -56,7 +56,7 @@ class ChecklistFragment : Fragment() {
                         listener
                     )
             }
-        })
+        }, this.context)
     }
 
     private fun setChecklistsToolbar() {

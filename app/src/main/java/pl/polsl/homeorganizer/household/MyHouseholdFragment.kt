@@ -81,6 +81,7 @@ class MyHouseholdFragment : Fragment() {
         dialogBuilder.setMessage("Are you sure you wanna leave Your household?")
         dialogBuilder.setPositiveButton("Yes"){
             dialog, which ->  leaveHousehold()
+
         }
         dialogBuilder.setNeutralButton("Cancel"){_,_->}
         dialogBuilder.create().show()
@@ -100,6 +101,7 @@ class MyHouseholdFragment : Fragment() {
                         this.requireContext().applicationContext,
                         HouseholdManager::class.java
                     )
+                    activity?.finish()
                     startActivity(intent)
                 },
                 Response.ErrorListener {
@@ -123,7 +125,9 @@ class MyHouseholdFragment : Fragment() {
                 createTable(users,view)
             },
             Response.ErrorListener {
-
+                if (it.networkResponse.statusCode==403){
+                    AuthenticationManager.logout(this.requireContext())
+                }
             }, this.requireContext().applicationContext)
 
         MySingleton.getInstance(this.requireContext().applicationContext).addToRequestQueue(request)

@@ -1,5 +1,6 @@
 package pl.polsl.homeorganizer.notes
 
+import android.content.Context
 import com.android.volley.Request
 import com.android.volley.Response
 import com.google.gson.Gson
@@ -15,7 +16,7 @@ object NotesContent {
     }
     var items: MutableList<Note> = ArrayList()
 
-    fun getChecklists(callback: NotesCallback) {
+    fun getChecklists(callback: NotesCallback,context: Context) {
         val credentials = AuthenticationManager.getCredentials(MainApplication.applicationContext())
         val url =
             MainApplication.applicationContext().getString(R.string.server_ip) + "notes?username" + credentials.username + "&householdId=" + credentials.householdId
@@ -30,6 +31,9 @@ object NotesContent {
                 callback.onSuccessResponse(items)
             },
             Response.ErrorListener {
+                if (it.networkResponse.statusCode==403){
+                    AuthenticationManager.logout(context)
+                }
 
             }, MainApplication.applicationContext()
         )

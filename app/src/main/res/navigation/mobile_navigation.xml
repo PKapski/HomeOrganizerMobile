@@ -25,11 +25,6 @@
             app:destination="@id/navigation_household" />
     </fragment>
 
-    <!--    <fragment-->
-<!--        android:id="@+id/navigation_calendar"-->
-<!--        android:name="pl.polsl.homeorganizer.ui.notifications.NotificationsFragment"-->
-<!--        android:label="@string/title_calendar"-->
-<!--        tools:layout="@layout/fragment_notifications" />-->
 
     <fragment
         android:id="@+id/navigation_household"

@@ -1,7 +1,9 @@
 package pl.polsl.homeorganizer.authentication
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import com.google.gson.Gson
 
 object AuthenticationManager {
@@ -28,9 +30,14 @@ object AuthenticationManager {
         return Gson().fromJson(json, Credentials::class.java)
     }
 
-    fun clearCredentials(context: Context){
+    private fun clearCredentials(context: Context){
         val sp = context.getSharedPreferences(
             PREFERENCES_NAME, Context.MODE_PRIVATE)
         sp.edit().clear().apply()
+    }
+    fun logout(context: Context) {
+        clearCredentials(context)
+        val intent = Intent(context,LoginActivity::class.java)
+        context.startActivity(intent)
     }
 }

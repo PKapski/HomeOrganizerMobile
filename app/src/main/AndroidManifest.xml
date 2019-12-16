@@ -16,9 +16,11 @@
         <activity
             android:name=".checklists.ChecklistInspectActivity"
             android:theme="@style/CustomAppTheme"
+            android:label="Checklist"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".notes.NoteInspectActivity"
+            android:label="Note"
             android:theme="@style/CustomAppTheme" />
         <activity
             android:name=".UserApplication"
@@ -27,7 +29,7 @@
         <activity
             android:name=".household.HouseholdManager"
             android:label="@string/title_activity_join_household"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".authentication.LoginActivity"
             android:label="@string/title_activity_login">

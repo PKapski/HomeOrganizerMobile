@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +29,7 @@ class ChecklistInspectActivity : AppCompatActivity(),
     var editMode: Boolean = false
     lateinit var checklist: Checklist
     lateinit var currentFragment: Fragment
+    var ARRAY_OF_OPTIONS = arrayOf("Edit", "Delete")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,20 +39,68 @@ class ChecklistInspectActivity : AppCompatActivity(),
 
         val tran = supportFragmentManager.beginTransaction()
         val frag = ChecklistItemListFragment.newInstance(checklist)
-        currentFragment=frag
+        currentFragment = frag
         tran.replace(R.id.fragment_container, frag)
         tran.commit()
 
         creatorTextChecklist.text = checklist.creator
         titleTextChecklist.setText(checklist.title)
 
+        checkIfChecklistHasItems()
+
+        addNewItemButton.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val inflater = layoutInflater
+            builder.setTitle("Add new item")
+            val dialogLayout = inflater.inflate(R.layout.dialog_with_edittext, null)
+            val editText = dialogLayout.findViewById<EditText>(R.id.newItemText)
+            builder.setView(dialogLayout)
+            builder.setPositiveButton("OK") { _, _ ->
+                checklist.itemList.add(ChecklistItem(editText.text.toString(), false))
+                saveChangesInDatabase()
+                checkIfChecklistHasItems()
+            }
+            builder.setNeutralButton("Cancel") { _, _ -> }
+            builder.show()
+        }
+
     }
 
     override fun onListFragmentInteraction(item: ChecklistItem?) {
-        item?.isChecked = !item?.isChecked!!
-        saveChangesInDatabase()
-
-
+        if (editMode) {
+            lateinit var dialog: AlertDialog
+            val dialogBuilder = AlertDialog.Builder(this)
+            dialogBuilder.setTitle("What would you like to do?")
+            dialogBuilder.setSingleChoiceItems(ARRAY_OF_OPTIONS, -1) { _, which ->
+                val option = ARRAY_OF_OPTIONS[which]
+                if (option == "Edit") {
+                    val builder = AlertDialog.Builder(this)
+                    val inflater = layoutInflater
+                    builder.setTitle("Edit an item")
+                    val dialogLayout = inflater.inflate(R.layout.dialog_with_edittext, null)
+                    val editText = dialogLayout.findViewById<EditText>(R.id.newItemText)
+                    editText.setText(item?.message)
+                    builder.setView(dialogLayout)
+                    builder.setPositiveButton("OK") { _, _ ->
+                        item?.message = editText.text.toString()
+                        saveChangesInDatabase()
+                    }
+                    builder.setNeutralButton("Cancel") { _, _ -> }
+                    builder.show()
+                } else {
+                    checklist.itemList.remove(item)
+                    saveChangesInDatabase()
+                    checkIfChecklistHasItems()
+                }
+                dialog.dismiss()
+            }
+            dialogBuilder.setNeutralButton("Cancel") { _, _ -> }
+            dialog = dialogBuilder.create()
+            dialog.show()
+        } else {
+            item?.isChecked = !item?.isChecked!!
+            saveChangesInDatabase()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,13 +118,13 @@ class ChecklistInspectActivity : AppCompatActivity(),
 
     private fun changeEditMode(item: MenuItem) {
 
-        if (!editMode){
+        if (!editMode) {
             item.setIcon(R.drawable.ic_apply)
             titleTextChecklist.isClickable = true
             titleTextChecklist.isFocusableInTouchMode = true
             titleTextChecklist.setBackgroundResource(R.drawable.text_edit)
             titleTextChecklist.requestFocus()
-        }else{
+        } else {
             item.setIcon(R.drawable.ic_edit)
             titleTextChecklist.isFocusableInTouchMode = false
             titleTextChecklist.isClickable = false
@@ -85,13 +137,13 @@ class ChecklistInspectActivity : AppCompatActivity(),
     }
 
     private fun saveChangesInDatabase() {
-        checklist.title=titleTextChecklist.text.toString()
-        val url=getString(R.string.server_ip) + "checklists"
+        checklist.title = titleTextChecklist.text.toString()
+        val url = getString(R.string.server_ip) + "checklists"
         val json = JSONObject(Gson().toJson(checklist))
         val request = CustomStringRequest(
             Request.Method.POST, url, json,
             Response.Listener {
-                    currentFragment.onResume()
+                currentFragment.onResume()
             },
             Response.ErrorListener {
                 Toast.makeText(
@@ -127,7 +179,8 @@ class ChecklistInspectActivity : AppCompatActivity(),
 
     private fun deleteChecklist() {
         val url = getString(R.string.server_ip) + "checklists/" + checklist.id
-        val request = CustomJsonRequest(Request.Method.DELETE, url, null,
+        val request = CustomJsonRequest(
+            Request.Method.DELETE, url, null,
             Response.Listener {
                 this.finish()
                 Toast.makeText(
@@ -152,5 +205,13 @@ class ChecklistInspectActivity : AppCompatActivity(),
             R.id.action_delete -> showDeleteConfirmationDialog()
         }
         return true
+    }
+
+    private fun checkIfChecklistHasItems() {
+        if (checklist.itemList.isEmpty()) {
+            noItemsText.visibility = VISIBLE
+        } else {
+            noItemsText.visibility = GONE
+        }
     }
 }

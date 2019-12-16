@@ -61,7 +61,7 @@ class NoteFragment : Fragment() {
                         listener
                     )
             }
-        })
+        },this.context)
     }
 
     private fun setNotesToolbar() {

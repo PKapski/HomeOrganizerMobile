@@ -7,5 +7,5 @@ data class Checklist(
     var title: String,
     var creator: String,
     var householdId: String,
-    var itemList: List<ChecklistItem>
+    var itemList: MutableList<ChecklistItem>
 ): Serializable

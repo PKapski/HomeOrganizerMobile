@@ -19,6 +19,7 @@ import pl.polsl.homeorganizer.authentication.LoginActivity
 import pl.polsl.homeorganizer.checklists.Checklist
 import pl.polsl.homeorganizer.checklists.ChecklistFragment
 import pl.polsl.homeorganizer.checklists.ChecklistInspectActivity
+import pl.polsl.homeorganizer.checklists.ChecklistItem
 import pl.polsl.homeorganizer.notes.Note
 import pl.polsl.homeorganizer.notes.NoteFragment
 import pl.polsl.homeorganizer.notes.NoteInspectActivity
@@ -51,8 +52,9 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
                 inspectNote(note)
             }
             R.id.navigation_checklists->{
-                val intent = Intent(this, ChecklistInspectActivity::class.java)
-                startActivity(intent)
+                val checklist = Checklist(null,"",credentials.username,credentials.householdId!!,
+                    mutableListOf())
+                inspectChecklist(checklist)
             }
         }
 
@@ -91,15 +93,12 @@ class UserApplication : AppCompatActivity(), ChecklistFragment.OnListFragmentInt
     }
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
-            R.id.action_logout -> logout()
+            R.id.action_logout -> {
+                AuthenticationManager.logout(this)
+                this.finish()
+            }
         }
         return true
     }
 
-    private fun logout() {
-        AuthenticationManager.clearCredentials(this.applicationContext)
-        val intent = Intent(this,LoginActivity::class.java)
-        this.finish()
-        startActivity(intent)
-    }
 }
